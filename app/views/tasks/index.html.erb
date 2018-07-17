@@ -1,0 +1,32 @@
+<div class=row>
+  <% if @tasks.size == 0 %>
+    <h3>No Tasks Available</h3>
+  <%end%>
+  <table class="table-hover">
+    <tr>
+      <th class=col-md-6>To Do</th>
+      <th class=col-md-2>Done</th>
+      <th class=col-md-2></th>
+      <th class=col-md-2></th>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td class=col-md-6><%= task.description %></td>
+        <td class=col-md-2>
+          <% unless task.done? %>
+            <%= link_to 'Mark as Done', completed_path(task), remote: true, method: :post %></td>
+          <% else %>
+            Done
+          <% end %>
+        <td class=col-md-2>
+          <% unless task.done? %>
+            <%= link_to 'Edit', edit_task_path(task) %>
+          <% end %>
+        </td>
+        <td class=col-md-2><%= link_to 'Destroy', task_path(task), method: :delete, data: {confirm: "Are you sure?"} %></td>
+      </tr>
+    <% end %>
+  </table>
+  <hr>
+  <%= link_to 'Create new To Do', new_task_path %>
+</div>
